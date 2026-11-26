@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07080c">
+<meta name="description" content="STARRY LIVE —— 浏览器里的结束乐队演唱会。两首合成示例曲、随节拍爆发的灯光、灯海与三种视角。开源演示。">
+<title>STARRY LIVE · 结束乐队线上演唱会</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="live.css">
+</head>
+<body>
+<canvas id="stage" aria-label="三维演唱会现场"></canvas>
+
+<!-- 波奇主观视角遮罩 -->
+<div id="pov" hidden>
+  <div class="pov-vignette"></div>
+  <div class="pov-heart"></div>
+  <div class="pov-flash"></div>
+  <div id="povLine" class="pov-line"></div>
+</div>
+
+<!-- 顶部信息 -->
+<header id="topbar">
+  <div class="brand"><b>STARRY</b><span>LIVE</span></div>
+  <button id="setlistBtn" class="chip" aria-haspopup="true" aria-controls="setlist">歌单</button>
+</header>
+
+<!-- 歌词 -->
+<div id="lyricWrap" aria-live="polite"><p id="lyric"></p></div>
+
+<!-- 底部控制台 -->
+<footer id="dock">
+  <div class="now">
+    <img id="cover" alt="" src="">
+    <div class="now-text">
+      <b id="songTitle">—</b>
+      <small><span id="songZh">結束バンド</span><i>·</i><span id="timeText">0:00 / 0:00</span></small>
+    </div>
+  </div>
+  <div class="seek"><input id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="播放进度"></div>
+  <div class="controls">
+    <div class="transport">
+      <button id="prevBtn" aria-label="上一首"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h3v14H5zm14 0v14L9 12z"/></svg></button>
+      <button id="playBtn" aria-label="播放"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="play-mark" d="M6 3.8q0-1.4 1.3-.7l14 8.1q1.3.8 0 1.6l-14 8.1q-1.3.7-1.3-.7z"/><path class="pause-mark" d="M5 4h5v16H5zm9 0h5v16h-5z"/></svg></button>
+      <button id="nextBtn" aria-label="下一首"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h3v14h-3zM5 5l10 7-10 7z"/></svg></button>
+    </div>
+    <div class="modes" role="group" aria-label="视角">
+      <button class="mode" data-mode="director" aria-pressed="true">导播</button>
+      <button class="mode" data-mode="free" aria-pressed="false">自由</button>
+      <button class="mode" data-mode="bocchi" aria-pressed="false">波奇视角</button>
+    </div>
+    <div class="calls" role="group" aria-label="举灯颜色">
+      <span class="call-label">举灯</span>
+      <button class="call" data-color="bocchi" aria-label="粉色灯海·波奇" >波奇</button>
+      <button class="call" data-color="nijika" aria-label="黄色灯海·虹夏" >虹夏</button>
+      <button class="call" data-color="kita" aria-label="红色灯海·喜多" >喜多</button>
+      <button class="call" data-color="ryo" aria-label="蓝色灯海·凉" >凉</button>
+      <button class="call auto" data-color="auto" aria-label="自动灯色" >自动</button>
+    </div>
+  </div>
+  <p class="hint">拖动画面转动镜头 · 空格播放 · 1–4 举灯 · M 切视角</p>
+</footer>
+
+<!-- 歌单抽屉 -->
+<aside id="setlist" hidden>
+  <div class="setlist-head">
+    <h2>SETLIST</h2>
+    <button id="setlistClose" aria-label="关闭歌单">×</button>
+  </div>
+  <ol id="setlistList"></ol>
+</aside>
+
+<!-- 入场页 -->
+<div id="entry">
+  <div class="soundcheck" role="status">
+    <div class="soundcheck-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <p>正在调音……</p>
+  </div>
+  <div class="ticket">
+    <div class="ticket-art">
+      <p class="ticket-kicker">下北泽 / LIVE HOUSE</p>
+      <h1>STARRY<br>LIVE</h1>
+      <img src="assets/char/bocchi.png" alt="" class="ticket-bocchi">
+    </div>
+    <div class="ticket-stub">
+      <p class="ticket-sub">STARRY · 开源舞台演示</p>
+      <p class="ticket-detail">两首合成示例曲　/　导播 · 自由 · 波奇视角</p>
+      <button id="enterBtn" disabled>进入现场 <span aria-hidden="true">↗</span></button>
+      <p id="entryStatus" class="ticket-status" role="status">正在调音……</p>
+      <p class="ticket-note">开源演示 · 原创几何角色与合成音乐</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast" hidden></div>
+<script type="module" src="live-app.js"></script>
+</body>
+</html>
